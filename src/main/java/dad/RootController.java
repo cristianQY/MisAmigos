@@ -24,7 +24,9 @@ public class RootController implements Initializable {
 
     private final FriendController friendController = new FriendController();
 
-    private final ListProperty<Friend> friends = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final ListProperty<Friend> friends = new SimpleListProperty<>(FXCollections.observableArrayList(
+            friend -> new Observable[] { friend.nameProperty(), friend.surnameProperty() }
+    ));
     private final ObjectProperty<Friend> selectedFriend = new SimpleObjectProperty<>();
 
     @FXML
@@ -64,6 +66,8 @@ public class RootController implements Initializable {
 
         selectedFriend.addListener(this::onSelectedFriendChanged);
 
+
+
     }
 
     private void onSelectedFriendChanged(ObservableValue<? extends Friend> o, Friend ov, Friend nv) {
@@ -96,6 +100,7 @@ public class RootController implements Initializable {
         friend.setName("Nombre");
         friend.setSurname("Apellidos");
         friends.add(friend);
+        frindList.getSelectionModel().select(friend);
 
     }
 
